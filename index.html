@@ -20,25 +20,24 @@
             height: 100vh;
             color: white;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 30px;
             width: 100%;
-            max-width: 600px;
-            padding: 20px;
+            max-width: 1200px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.15);
             border-radius: 15px;
-            padding: 20px;
+            padding: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            text-align: center;
         }
 
         .card:hover {
@@ -47,39 +46,38 @@
         }
 
         .card-icon {
-            font-size: 2.5em;
+            font-size: 3em;
             color: #fff;
         }
 
         .card-title {
-            font-size: 1.5em;
+            font-size: 1.7em;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .steps-count {
-            font-size: 2.5em;
+            font-size: 3em;
             color: #fff;
             font-weight: 700;
             margin: 10px 0;
         }
 
         .progress-circle {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: conic-gradient(#fff 0%, #6dd5ed 75%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            margin: 0 auto;
         }
 
         .progress-circle::before {
             content: "";
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             background-color: #2193b0;
             border-radius: 50%;
             position: absolute;
@@ -89,33 +87,9 @@
         }
 
         .progress-percentage {
-            font-size: 1.2em;
+            font-size: 1.5em;
             position: relative;
             z-index: 1;
-        }
-
-        /* Top Up Bar */
-        .top-up-bar {
-            display: none; /* Hidden initially */
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #e74c3c;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            z-index: 10;
-            animation: slideDown 0.5s ease forwards; /* Add animation */
-        }
-
-        @keyframes slideDown {
-            from {
-                top: -100px; /* Start above the viewport */
-            }
-            to {
-                top: 20px; /* End position */
-            }
         }
 
         /* Modal for Fall Detection */
@@ -123,7 +97,7 @@
             display: none;
             position: fixed;
             z-index: 1;
-            padding-top: 100px;
+            padding-top: 150px;
             left: 0;
             top: 0;
             width: 100%;
@@ -134,9 +108,9 @@
         .modal-content {
             background-color: white;
             margin: auto;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             max-width: 400px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -155,7 +129,7 @@
         }
 
         .modal-message {
-            font-size: 1.5em;
+            font-size: 1.7em;
             color: #e74c3c;
             margin-bottom: 20px;
         }
@@ -163,10 +137,10 @@
         .modal-button {
             background-color: #2193b0;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 25px;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
+            font-size: 1.1em;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -175,42 +149,58 @@
             background-color: #1976a4;
         }
 
-        .refresh-icon {
-            font-size: 1.5em;
-            color: #fff;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            display: none; /* Initially hidden */
-        }
+        /* Responsive design for mobile screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
 
-        .refresh-icon:hover {
-            color: #6dd5ed;
-        }
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
 
-        /* Media Queries for smaller devices */
-        @media (max-width: 500px) {
             .card-title {
-                font-size: 1.4em;
+                font-size: 1.5em;
             }
 
             .steps-count {
-                font-size: 2em;
+                font-size: 2.5em;
             }
 
-            .modal-message {
+            .card-icon {
+                font-size: 2.5em;
+            }
+
+            .progress-circle {
+                width: 80px;
+                height: 80px;
+            }
+
+            .progress-circle::before {
+                width: 60px;
+                height: 60px;
+            }
+
+            .progress-percentage {
                 font-size: 1.2em;
             }
 
-            .modal-button {
-                font-size: 0.9em;
+            .modal-content {
+                width: 90%;
+                max-width: 350px;
+                padding: 20px;
+            }
+
+            .modal-message {
+                font-size: 1.5em;
             }
         }
+
     </style>
 </head>
 
 <body>
-
-    <div class="top-up-bar" id="top-up-bar">Fall detection status refreshed!</div>
 
     <div class="dashboard">
         <!-- Step Counter Card -->
@@ -228,7 +218,6 @@
             <i class="fas fa-heartbeat card-icon"></i>
             <div class="card-title">Fall Detection</div>
             <div class="steps-count" id="fall-status">No fall detected</div>
-            <i class="fas fa-sync refresh-icon" id="refresh-status" title="Refresh Status"></i>
         </div>
     </div>
 
@@ -242,56 +231,59 @@
     </div>
 
     <script>
-        let fallDetected = false;
+        // Connect to HiveMQ broker
+        const client = mqtt.connect('wss://c2ce498225654cce921da840fedf4bd9.s1.eu.hivemq.cloud:8884/mqtt', {
+            username: 'hivemq.webclient.1728748403505',
+            password: '7,R>jFNt2dY0a1@hBx.C'
+        });
 
-        function handleFallDetection(fallStatus) {
-            if (fallStatus) {
+        client.on('connect', function () {
+            console.log('Connected to HiveMQ broker');
+            client.subscribe('esp8266/stepcounter');
+            client.subscribe('esp8266/falldetection');
+        });
+
+        client.on('message', function (topic, message) {
+            const data = JSON.parse(message.toString());
+
+            if (topic === 'esp8266/stepcounter') {
+                const steps = data.steps;
+                const progress = Math.min((steps / 10000) * 100, 100); // Assume 10,000 steps is the goal
+                document.getElementById('steps').innerText = steps;
+                document.getElementById('progress-percentage').innerText = `${Math.floor(progress)}%`;
+                document.querySelector('.progress-circle').style.background = `conic-gradient(#fff ${progress}%, #6dd5ed ${progress}%)`;
+            }
+
+            if (topic === 'esp8266/falldetection' && data.fall_detected) {
                 document.getElementById('fall-status').innerText = "Fall detected!";
-                document.getElementById('refresh-status').style.display = 'inline'; // Show refresh icon
-                document.getElementById("fallModal").style.display = "block"; // Show modal
-                document.getElementById("top-up-bar").style.display = 'none'; // Hide top-up bar on fall detected
-                fallDetected = true;
-
-                // Automatically refresh status after 10 seconds
-                setTimeout(() => {
-                    document.getElementById('fall-status').innerText = "No fall detected";
-                    document.getElementById('refresh-status').style.display = 'none'; // Hide refresh icon
-                    fallDetected = false;
-                    // Show top-up bar with message
-                    document.getElementById("top-up-bar").style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById("top-up-bar").style.display = 'none'; // Hide top-up bar after 3 seconds
-                    }, 3000);
-                }, 10000); // 10 seconds
+                showFallModal();
             } else {
                 document.getElementById('fall-status').innerText = "No fall detected";
-                document.getElementById('refresh-status').style.display = 'none'; // Hide refresh icon
-                document.getElementById("top-up-bar").style.display = 'none'; // Hide top-up bar
-                fallDetected = false;
             }
+        });
+
+        function showFallModal() {
+            document.getElementById("fallModal").style.display = "block";
         }
 
         const closeModalBtn = document.getElementById("closeModalBtn");
-        closeModalBtn.onclick = function () {
-            document.getElementById("fallModal").style.display = "none";
-        };
+        const closeSpan = document.querySelector(".close");
 
-        const closeBtn = document.getElementsByClassName("close")[0];
-        closeBtn.onclick = function () {
-            document.getElementById("fallModal").style.display = "none";
-        };
+        closeModalBtn.onclick = closeModal;
+        closeSpan.onclick = closeModal;
 
-        const refreshStatus = document.getElementById('refresh-status');
-        refreshStatus.onclick = function () {
-            // Simulate refresh action
-            const fallDetected = Math.random() < 0.5; // Randomly determine fall detection status
-            handleFallDetection(fallDetected);
-            document.getElementById("top-up-bar").style.display = 'block'; // Show top-up bar
-            setTimeout(() => {
-                document.getElementById("top-up-bar").style.display = 'none'; // Hide after 3 seconds
-            }, 3000);
-        };
+        function closeModal() {
+            document.getElementById("fallModal").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById("fallModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
+
 </body>
 
 </html>
